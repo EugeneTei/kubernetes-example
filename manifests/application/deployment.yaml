@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: example
+  name: kubernetes-example
+  labels:
+    app: kubernetes-example
+spec:
+  selector:
+    matchLabels:
+      app: kubernetes-example
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: kubernetes-example
+    spec:
+      containers:
+        - name: kubernetes-example-springboot
+          image: kubernetes-example/springboot:1.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - prefix: CONFIG_
+              configMapRef:
+                name: kubernetes-example-config
+          resources:
+            requests:
+              cpu: "1"
+              memory: "2Gi"
+            limits:
+              cpu: "2"
+              memory: "4Gi"
+          livenessProbe:
+            httpGet:
+              path: /kubernetes-example/actuator/health
+              port: 8080
+            initialDelaySeconds: 180
+            periodSeconds: 10
+            timeoutSeconds: 3
+            failureThreshold: 3
+            successThreshold: 1
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /kubernetes-example/actuator/health
+              port: 8080
+            initialDelaySeconds: 60
+            periodSeconds: 30
+            successThreshold: 1
+            timeoutSeconds: 3

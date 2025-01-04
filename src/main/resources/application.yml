@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: @project.artifactId@
+  profiles:
+    active: ${CONFIG_active_profile:local}
+
+server:
+  servlet:
+    context-path: /kubernetes-example
+  port: 8080
+  tomcat:
+    threads:
+      max: 200
+      min-spare: 10
+    accept-count: 100
+    connection-timeout: 5000
+
+springdoc:
+  swagger-ui:
+    path: /sw
+    operations-sorter: method
+    default-models-expand-depth: 0
+    doc-expansion: none
+    tags-sorter: alpha
+  writer-with-default-pretty-printer: true
+
+build:
+  version: @project.version@

@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kubernetes-example-config
+  namespace: example
+data:
+  active_profile: "k8s"

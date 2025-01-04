@@ -3,6 +3,20 @@ spring:
     name: @project.artifactId@
   profiles:
     active: ${CONFIG_active_profile:local}
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    tomcat:
+      init-s-q-l: SET NAMES utf8mb4
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        dialect:
+          storage_engine: innodb
+        show_sql: true
+        format_sql: true
 
 server:
   servlet:

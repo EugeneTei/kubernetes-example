@@ -2,6 +2,11 @@
 
 ## Run Locally
 
+Setup
+```
+docker compose -f setup/docker-compose.yaml up -d
+```
+
 Build Application
 ```
 mvn clean package

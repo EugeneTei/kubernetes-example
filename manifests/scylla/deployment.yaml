@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: example
+  name: kubernetes-example-scylla-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kubernetes-example-scylla-db
+  template:
+    metadata:
+      labels:
+        app: kubernetes-example-scylla-db
+    spec:
+      containers:
+        - name: kubernetes-example-scylla-db
+          image: scylladb/scylla:5.2
+          ports:
+            - containerPort: 9042
+          args:
+            - "--developer-mode"
+            - "1"
+            - "--smp"
+            - "1"
+          readinessProbe:
+            exec:
+              command:
+                - cqlsh
+                - -e
+                - "describe cluster"
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            failureThreshold: 5
+          livenessProbe:
+            exec:
+              command:
+                - cqlsh
+                - -e
+                - "describe cluster"
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            failureThreshold: 5

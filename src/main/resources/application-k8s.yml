@@ -1,0 +1,7 @@
+spring:
+  cassandra:
+    contact-points: ${SECRET_spring_cassandra_contact-points}
+    port: ${SECRET_spring_cassandra_port}
+    local-datacenter: ${SECRET_spring_cassandra_local-datacenter}
+    keyspace-name: ${SECRET_spring_cassandra_keyspace-name}
+    schema-action: ${SECRET_spring_cassandra_schema-action}

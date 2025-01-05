@@ -29,6 +29,9 @@ spec:
             - prefix: CONFIG_
               configMapRef:
                 name: kubernetes-example-config
+            - prefix: SECRET_
+              secretRef:
+                name: kubernetes-example-secret
           resources:
             requests:
               cpu: "1"
